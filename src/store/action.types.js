@@ -3,5 +3,5 @@
  */
 
 export default {
-    
+    updateToken: 'UPDATE_TOKEN',//更新token
 }

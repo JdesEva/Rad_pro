@@ -1,7 +1,7 @@
 import React from 'react'
-import './index.scss'
 
-class Loading extends React.Component {
+
+class ErrorPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -9,18 +9,16 @@ class Loading extends React.Component {
         }
     }
 
-    componentDidMount() {
-        console.log(this)
-    }
+
 
     render() {
         return (
             <div>
-                Loading
+
             </div>
         )
     }
 }
 
 
-export default Loading
+export default ErrorPage

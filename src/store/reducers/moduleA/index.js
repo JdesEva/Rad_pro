@@ -18,3 +18,12 @@ export function todos(state = [], action) {
       return state;
   }
 }
+
+export function token(state = '', action) {
+  switch (action.type) {
+    case 'ADD_TOKEN':
+      return state.concat([action.text]);
+    default:
+      return state;
+  }
+}

@@ -7,7 +7,7 @@
  * 本地储存辅助函数，用于取出本地存储的数据
  * @param {字段} key 
  * @param {初始值} __initVal 
- * @param {数据类型} type {object/number/boolean/string}
+ * @param {数据类型} type {object/number/boolean/string(null)}
  */
 
 function mapSessionToState(key, __initVal, type = 'string') {
@@ -21,12 +21,13 @@ function mapSessionToState(key, __initVal, type = 'string') {
         case 'boolean':
             return v === 'true'
         default:
-            return v
+            return v === 'null' ? null : v
     }
 }
 
 
 export default {
-    counter: mapSessionToState('counter',100,'number'),
-    todos: [1,2,3,4],
+    counter: mapSessionToState('counter', 100, 'number'),
+    todos: [1, 2, 3, 4],
+    token: mapSessionToState('token', null)
 }
