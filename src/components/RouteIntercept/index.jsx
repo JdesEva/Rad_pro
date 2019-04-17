@@ -18,8 +18,9 @@ class RouterIntercept extends React.Component {
     }
 
     componentWillMount() {
-        let { history: { replace }, token } = this.props
+        let { history: { replace }, location, token } = this.props
         if (!token) replace('/login') //不存在token则打回登录页
+        if (location.pathname === '/') replace('/disabord')
     }
 
     render() {
