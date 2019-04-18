@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Switch } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import mapDispatchToProps from './dispatch'
 
@@ -18,17 +18,16 @@ class RouterIntercept extends React.Component {
     }
 
     componentWillMount() {
+        console.log(this)
         let { history: { replace }, location, token } = this.props
-        if (!token) replace('/login') //不存在token则打回登录页
-        if (location.pathname === '/') replace('/disabord')
+        if (!token && this.props.path !== '/register') replace('/login') //不存在token则打回登录页
+        if (location.pathname === '/') replace('/disabord/index') //跳转至首页
     }
 
     render() {
         const Component = this.props.component
         return (
-            <Switch>
-                <Component {...this.props}></Component>
-            </Switch>
+            <Component {...this.props}></Component>
         )
     }
 }

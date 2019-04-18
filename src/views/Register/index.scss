@@ -1,0 +1,32 @@
+.register {
+  height: 100vh;
+  display: flex;
+  background: #ebebeb;
+  h3 {
+    position: absolute;
+    padding: 0.5rem 0 0 1rem;
+  }
+  @media screen and (max-width: 700px) {
+    .logo {
+      display: none;
+    }
+  }
+  .logo {
+    flex: 1;
+    align-self: center;
+  }
+  .box {
+    display: flex;
+    padding: 0 12.5px;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    h2 {
+      text-align: left;
+      margin-bottom: 3.5rem;
+    }
+    .register--login {
+      float: right;
+    }
+  }
+}

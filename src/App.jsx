@@ -36,6 +36,7 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
+
           {
             routes.map((row, index) => {
               return (

@@ -14,7 +14,7 @@ class ErrorPage extends React.Component {
     render() {
         return (
             <div>
-
+                404 页面飞去火星啦
             </div>
         )
     }

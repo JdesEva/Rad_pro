@@ -9,10 +9,6 @@ class Loading extends React.Component {
         }
     }
 
-    componentDidMount() {
-        console.log(this)
-    }
-
     render() {
         return (
             <div>

@@ -20,7 +20,7 @@ class Login extends React.Component {
 
     Login = (ev) => {
         ev.preventDefault()
-        this.props.form.validateFieldsAndScroll((errors, values) => {
+        this.props.form.validateFields((errors, values) => {
             if (!errors) {
                 this.props.api.post('/login', { ...values, password: MD5(values.password) }).then(res => {
                     console.log(res)
@@ -40,7 +40,7 @@ class Login extends React.Component {
     }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const { getFieldDecorator } = this.props.form
         return (
             <div className="login-warpper">
                 <Card className="login-box" style={{ width: 350 }}>
@@ -74,7 +74,7 @@ class Login extends React.Component {
                             <a className="forget" href="/#">忘记密码</a>
                             <Button block htmlType="submit" type="primary">登录</Button>
                             <div className="remember">
-                                或 <a href="/#">立即注册</a>
+                                或 <a href="/register">立即注册</a>
                             </div>
                         </Form.Item>
                     </Form>

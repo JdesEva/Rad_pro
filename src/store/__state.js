@@ -17,7 +17,7 @@ function mapSessionToState(key, __initVal, type = 'string') {
         case 'object':
             return JSON.parse(v)
         case 'number':
-            return v + 0
+            return v * 1
         case 'boolean':
             return v === 'true'
         default:
