@@ -1,4 +1,4 @@
-import ACTIONTYPE from '../../action.types'
+import ACTIONTYPE from '../action.types'
 
 export function token(state = '', action) {
     switch (action.type) {

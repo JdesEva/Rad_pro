@@ -1,6 +1,7 @@
 import React from 'react'
+import './Header.scss'
 
-import { Layout, Menu } from 'antd'
+import { Layout, Icon } from 'antd'
 
 class Header extends React.Component {
     constructor(props) {
@@ -10,22 +11,25 @@ class Header extends React.Component {
         }
     }
 
+    componentDidMount() {
+        console.log(this)
+    }
 
+
+    /**
+     * 折叠菜单
+     */
+    toggleIsCollapse = () => {
+        this.props.updateMenu({ isCollapse: !this.props.menu.isCollapse })
+    }
 
     render() {
         return (
-            <Layout.Header>
+            <Layout.Header style={{ zIndex: 51, textAlign: 'left' }}>
                 <div className="logo" />
-                <Menu
-                    theme="dark"
-                    mode="horizontal"
-                    defaultSelectedKeys={['2']}
-                    style={{ lineHeight: '64px', float: 'left' }}
-                >
-                    <Menu.Item key="1">nav 1</Menu.Item>
-                    <Menu.Item key="2">nav 2</Menu.Item>
-                    <Menu.Item key="3">nav 3</Menu.Item>
-                </Menu>
+                {
+                    !this.props.menu.broken ? <Icon onClick={this.toggleIsCollapse} className="trigger-icon" type={this.props.menu.isCollapse ? 'menu-unfold' : 'menu-fold'}></Icon> : ''
+                }
             </Layout.Header>
         )
     }

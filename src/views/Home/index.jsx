@@ -26,11 +26,12 @@ class Home extends React.Component {
         return (
             <div className="home">
                 <Layout>
-                    <Header></Header>
+                    <Header {...this.props}></Header>
                     <Layout>
-                        <Aside></Aside>
+                        <Aside {...this.props}></Aside>
                         <Layout>
                             <Content {...this.props}></Content>
+                            <p style={{ marginBottom: 0, textAlign: 'center' }}>Rad_pro ©2019 Created by Jdes 请勿商用 后果概不负责</p>
                         </Layout>
                     </Layout>
                 </Layout>

@@ -2,16 +2,18 @@
  * 组合reducer
  */
 
-import * as reducers from './reducers/moduleA'
+import * as token from './reducers/token'
 
-import * as token from './reducers/Token'
+import * as httpError from './reducers/httpError'
+
+import * as menu from './reducers/menu'
 
 import { combineReducers } from 'redux'
 
-console.log(reducers)
 
 
 export default combineReducers({
-    ...reducers,
-    ...token
+    ...token,
+    ...httpError,
+    ...menu
 })

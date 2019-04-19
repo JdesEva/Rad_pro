@@ -10,6 +10,24 @@
     .logo {
       display: none;
     }
+    .box {
+      width: 100%;
+    }
+  }
+  @media screen and (min-width: 700px) and (max-width: 900px) {
+    .box {
+      margin-right: 2.5rem;
+    }
+  }
+  @media screen and (min-width: 900px) and (max-width: 1200px) {
+    .box {
+      margin-right: 5rem;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .box {
+      margin-right: 7.5rem;
+    }
   }
   .logo {
     flex: 1;

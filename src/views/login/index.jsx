@@ -2,6 +2,7 @@ import React from 'react'
 import './index.scss'
 
 import { Card, Form, Icon, Input, Button, Checkbox, message } from 'antd'
+import { Link } from 'react-router-dom'
 import MD5 from 'js-md5'
 
 @Form.create({})
@@ -22,7 +23,7 @@ class Login extends React.Component {
         ev.preventDefault()
         this.props.form.validateFields((errors, values) => {
             if (!errors) {
-                this.props.api.post('/login', { ...values, password: MD5(values.password) }).then(res => {
+                this.props.api.post('/user/login', { ...values, password: MD5(values.password) }).then(res => {
                     console.log(res)
                     if (res.data.success) {
                         this.props.updateToken(res.data.data)
@@ -71,10 +72,10 @@ class Login extends React.Component {
                                     <Checkbox className="remember">记住我</Checkbox>
                                 )
                             }
-                            <a className="forget" href="/#">忘记密码</a>
+                            <Link to="/#" className="forget">忘记密码</Link>
                             <Button block htmlType="submit" type="primary">登录</Button>
                             <div className="remember">
-                                或 <a href="/register">立即注册</a>
+                                或 <Link to="/register">立即注册</Link>
                             </div>
                         </Form.Item>
                     </Form>

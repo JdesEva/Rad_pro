@@ -31,7 +31,6 @@ class App extends Component {
     console.log(this)
   }
 
-
   render() {
     return (
       <div className="App">

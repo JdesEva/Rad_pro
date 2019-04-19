@@ -12,7 +12,7 @@
 
 function mapSessionToState(key, __initVal, type = 'string') {
     var v = sessionStorage.getItem(key)
-    if (!v) v = __initVal
+    if (!v) v = JSON.stringify(__initVal)
     switch (type) {
         case 'object':
             return JSON.parse(v)
@@ -27,7 +27,7 @@ function mapSessionToState(key, __initVal, type = 'string') {
 
 
 export default {
-    counter: mapSessionToState('counter', 100, 'number'),
-    todos: [1, 2, 3, 4],
-    token: mapSessionToState('token', null)
+    token: mapSessionToState('token', null),
+    httpError: mapSessionToState('httpError', {}, 'object'),
+    menu: mapSessionToState('menu', {isCollapse:false,broken:false}, 'object'),
 }

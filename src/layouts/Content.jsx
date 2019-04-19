@@ -19,9 +19,11 @@ class Content extends React.Component {
         console.log('content', this)
     }
 
+
+
     render() {
         return (
-            <Layout.Content>
+            <Layout.Content style={{ padding: '20px' }}>
                 <Switch>
                     {
                         this.props.children.map((row, index) => {

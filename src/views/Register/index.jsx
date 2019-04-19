@@ -2,7 +2,7 @@ import React from 'react'
 import './index.scss'
 
 import { Card, Form, Input, Icon, Button, message } from 'antd'
-
+import { Link } from 'react-router-dom'
 import MD5 from 'js-md5'
 
 @Form.create({})
@@ -23,7 +23,7 @@ class Register extends React.Component {
         ev.preventDefault()
         this.props.form.validateFields((errors, values) => {
             if (!errors) {
-                this.props.api.post('/register', { ...values, password: MD5(values.password) }).then(res => {
+                this.props.api.post('/user/register', { ...values, password: MD5(values.password) }).then(res => {
                     console.log(res)
                     if (res.data.success) {
                         message.success('注册成功')
@@ -69,7 +69,7 @@ class Register extends React.Component {
                             <Form.Item>
                                 <div className="register--login">
                                     <span>已有账号？</span>
-                                    <a className="login" href="/login">立即登录</a>
+                                    <Link className="login" to="/login">立即登录</Link>
                                 </div>
                                 <Button block htmlType="submit" type="primary">注册</Button>
                             </Form.Item>

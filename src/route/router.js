@@ -7,12 +7,13 @@ import Loadable from 'react-loadable'
 import Loading from '../components/Loading'
 
 
-const Login = Loadable({ loader: () => import(/* webpackChunkName: "Login" */ '../views/Login'), loading: Loading })
+const Login = Loadable({ loader: () => import(/* webpackChunkName: "Home" */ '../views/Login'), loading: Loading })
 const Home = Loadable({ loader: () => import(/* webpackChunkName: "Home" */ '../views/Home'), loading: Loading })
 const Index = Loadable({ loader: () => import(/* webpackChunkName: "Home" */ '../views/Index'), loading: Loading })
 const ErrorPage = Loadable({ loader: () => import(/* webpackChunkName: "Home" */ '../views/ErrorPage'), loading: Loading })
 const User = Loadable({ loader: () => import(/* webpackChunkName: "User" */ '../views/User'), loading: Loading })
 const Register = Loadable({ loader: () => import(/* webpackChunkName: "Register" */ '../views/Register'), loading: Loading })
+const Permission = Loadable({ loader: () => import(/* webpackChunkName: "Permission" */ '../views/Permission'), loading: Loading })
 
 export default [{
     path: '/',
@@ -27,6 +28,9 @@ export default [{
     }, {
         path: 'user',
         component: User
+    }, {
+        path: 'permission',
+        component: Permission
     }, {
         path: '*',
         component: ErrorPage

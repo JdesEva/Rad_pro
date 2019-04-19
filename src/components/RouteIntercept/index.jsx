@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom'
 
 import mapDispatchToProps from './dispatch'
 
+
 class RouterIntercept extends React.Component {
     constructor(props) {
         super(props)
@@ -19,9 +20,20 @@ class RouterIntercept extends React.Component {
 
     componentWillMount() {
         console.log(this)
+        this.Auth()
+    }
+
+    Auth = () => {
         let { history: { replace }, location, token } = this.props
-        if (!token && this.props.path !== '/register') replace('/login') //不存在token则打回登录页
-        if (location.pathname === '/') replace('/disabord/index') //跳转至首页
+
+        //不存在token则打回登录页
+        if (!token && this.props.path !== '/register') replace('/login')
+
+        //跳转至首页
+        if (location.pathname === '/' || location.pathname === '/disabord') replace('/disabord/index')
+
+        //回到登录页清空错误信息
+        if (this.props.path === '/login') this.props.resetHttpError({})
     }
 
     render() {
@@ -32,7 +44,7 @@ class RouterIntercept extends React.Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
     return { ...state }
 }
 
