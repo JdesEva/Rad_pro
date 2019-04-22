@@ -16,14 +16,14 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this)
+        console.log(this, 'api', this.props.api.defaults)
     }
 
     Login = (ev) => {
         ev.preventDefault()
         this.props.form.validateFields((errors, values) => {
             if (!errors) {
-                this.props.api.post('/user/login', { ...values, password: MD5(values.password) }).then(res => {
+                this.props.api.post(this.props.server.user.login, { ...values, password: MD5(values.password) }).then(res => {
                     console.log(res)
                     if (res.data.success) {
                         this.props.updateToken(res.data.data)

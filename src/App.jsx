@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 
 import api from './api/api' //api,将api挂载到react props上之后全局都可以通过props进行调用
+import server from './api/server' //api文档
 
 import './App.scss'
 
@@ -19,7 +20,7 @@ function RouteWithSubRoutes(route) {
       exact={route.exact}
       render={props => (
         // pass the sub-routes down to keep nesting
-        <RouteIntercept api={api} {...route} {...props} />
+        <RouteIntercept api={api} server={server} {...route} {...props} />
       )}
     />
   );
@@ -35,7 +36,6 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-
           {
             routes.map((row, index) => {
               return (

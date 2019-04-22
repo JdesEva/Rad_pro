@@ -1,0 +1,10 @@
+.card-out-wrapper {
+  margin-bottom: 1rem;
+  .ant-card {
+    min-height: 55vh;
+    height: auto;
+  }
+  .ant-empty {
+    padding-top: 4.375rem;
+  }
+}

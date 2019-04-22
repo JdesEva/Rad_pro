@@ -1,0 +1,5 @@
+.content-wrapper {
+  & div:nth-child(1) {
+    flex: 1;
+  }
+}

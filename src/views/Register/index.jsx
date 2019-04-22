@@ -23,7 +23,7 @@ class Register extends React.Component {
         ev.preventDefault()
         this.props.form.validateFields((errors, values) => {
             if (!errors) {
-                this.props.api.post('/user/register', { ...values, password: MD5(values.password) }).then(res => {
+                this.props.api.post(this.props.server.user.register, { ...values, password: MD5(values.password) }).then(res => {
                     console.log(res)
                     if (res.data.success) {
                         message.success('注册成功')

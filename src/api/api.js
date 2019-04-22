@@ -1,12 +1,13 @@
+/**
+ * axios 配置
+ */
+
 import axios from 'axios'
 import { message } from 'antd'
 
 import store from '../store/store'
 
 import ACTIONTYPE from '../store/action.types'
-
-
-
 
 
 // http request 拦截器
@@ -25,6 +26,8 @@ axios.interceptors.request.use(config => {
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
+    store.dispatch({ type: ACTIONTYPE.http, payload: { status: response.status, msg: response.data.msg, success: false } })
+    //将返回结果统一 扔进 redux 触发提示信息
     return response
   },
   error => {
@@ -42,11 +45,7 @@ axios.interceptors.response.use(
           break
       }
       //将错误信息 扔进redux 触发消息提示
-      store.dispatch({ type: ACTIONTYPE.httpError, payload: { status: error.response.status, statusText: error.response.statusText } })
-      //打回登录页 1秒之后打回登录页
-      setTimeout(() => {
-        window.location.replace('/login')
-      }, 1000)
+      store.dispatch({ type: ACTIONTYPE.http, payload: { status: error.response.status, msg: error.response.statusText, success: false } })
     }
     return Promise.reject(error.response.data) // 返回接口返回的错误信息
   })

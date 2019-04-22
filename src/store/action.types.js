@@ -4,7 +4,7 @@
 
 export default {
     updateToken: 'UPDATE_TOKEN',//更新token
-    httpError: 'HTTP_ERROR',//请求错误
-    resetError: 'RESET_HTTP_ERROR',//重置错误
+    http: 'HTTP_STATUS',//请求响应
+    resetHttp: 'RESET_HTTP_STATUS',//重置请求响应
     updateMenu: 'UPDATE_MENU',//更新菜单
 }

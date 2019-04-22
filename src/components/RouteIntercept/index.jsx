@@ -9,6 +9,14 @@ import { withRouter } from 'react-router-dom'
 
 import mapDispatchToProps from './dispatch'
 
+const mapStateToProps = state => {
+    return { ...state }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+
+@withRouter
+
 
 class RouterIntercept extends React.Component {
     constructor(props) {
@@ -44,12 +52,7 @@ class RouterIntercept extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    return { ...state }
-}
 
-
-
-RouterIntercept = withRouter(connect(mapStateToProps, mapDispatchToProps)(RouterIntercept))
+//RouterIntercept = withRouter(connect(mapStateToProps, mapDispatchToProps)(RouterIntercept))
 
 export default RouterIntercept
