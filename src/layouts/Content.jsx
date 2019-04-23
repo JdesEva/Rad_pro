@@ -40,7 +40,7 @@ class Content extends React.Component {
                             : ""
                     }
                 </Switch>
-                <div style={{ fontSize: '12px', textAlign: 'center' }}>
+                <div style={{ fontSize: '12px', textAlign: 'center', marginBottom: '-1rem' }}>
                     <p>Rad_pro ©2019 Created by Jdes</p>
                     <p>请勿商用 后果概不负责</p>
                 </div>

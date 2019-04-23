@@ -28,6 +28,6 @@ function mapSessionToState(key, __initVal, type = 'string') {
 
 export default {
     token: mapSessionToState('token', null),
-    httpError: mapSessionToState('httpError', {}, 'object'),
-    menu: mapSessionToState('menu', {isCollapse:false,broken:false}, 'object'),
+    http: mapSessionToState('http', {}, 'object'),
+    menu: mapSessionToState('menu', { isCollapse: false, broken: false }, 'object'),
 }

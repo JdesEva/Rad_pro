@@ -40,8 +40,8 @@ class RouterIntercept extends React.Component {
         //跳转至首页
         if (location.pathname === '/' || location.pathname === '/disabord') replace('/disabord/index')
 
-        //回到登录页清空错误信息
-        if (this.props.path === '/login') this.props.resetHttpError({})
+        //回到登录页清空信息
+        if (this.props.path === '/login') this.props.resetHttp({})
     }
 
     render() {
@@ -52,7 +52,5 @@ class RouterIntercept extends React.Component {
     }
 }
 
-
-//RouterIntercept = withRouter(connect(mapStateToProps, mapDispatchToProps)(RouterIntercept))
 
 export default RouterIntercept

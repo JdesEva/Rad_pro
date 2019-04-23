@@ -11,6 +11,8 @@ export default {
     permission: {
         query: '/permission/selectByCondition',
         create: '/permission/insert',
-        update: '/permission/update'
+        update: '/permission/update',
+        createFst: '/permission/insertRoot',
+        delete: '/permission/delete'
     }
 }

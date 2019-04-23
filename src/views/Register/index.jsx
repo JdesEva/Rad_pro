@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.scss'
 
-import { Card, Form, Input, Icon, Button, message } from 'antd'
+import { Card, Form, Input, Icon, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import MD5 from 'js-md5'
 
@@ -26,14 +26,9 @@ class Register extends React.Component {
                 this.props.api.post(this.props.server.user.register, { ...values, password: MD5(values.password) }).then(res => {
                     console.log(res)
                     if (res.data.success) {
-                        message.success('注册成功')
                         this.props.history.replace('/login')
-                    } else {
-                        message.warn('用户已存在')
                     }
-                }).catch(() => {
-                    message.error('未知错误,请联系后台人员')
-                })
+                }).catch(() => { })
             }
         })
     }

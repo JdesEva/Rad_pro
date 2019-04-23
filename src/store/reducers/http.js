@@ -1,10 +1,10 @@
 import ACTIONTYPE from '../action.types'
 
-export function httpError(state = {}, action) {
+export function http(state = {}, action) {
     switch (action.type) {
-        case ACTIONTYPE.httpError:
+        case ACTIONTYPE.http:
             return { ...state, ...action.payload }
-        case ACTIONTYPE.resetError:
+        case ACTIONTYPE.resetHttp:
             return action.payload
         default:
             return state

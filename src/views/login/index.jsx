@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.scss'
 
-import { Card, Form, Icon, Input, Button, Checkbox, message } from 'antd'
+import { Card, Form, Icon, Input, Button, Checkbox } from 'antd'
 import { Link } from 'react-router-dom'
 import MD5 from 'js-md5'
 
@@ -28,13 +28,8 @@ class Login extends React.Component {
                     if (res.data.success) {
                         this.props.updateToken(res.data.data)
                         this.props.history.replace('/')
-                        message.success('登录成功')
-                    } else {
-                        message.error('登录失败')
                     }
-                }).catch(() => {
-                    message.error('未知错误,请联系后台人员')
-                })
+                }).catch(() => { })
             }
         })
 

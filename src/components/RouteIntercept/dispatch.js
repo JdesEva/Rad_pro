@@ -5,8 +5,8 @@ export default function mapDispatchToProps(dispatch, ownProps) {
         updateToken: token => {
             dispatch({ type: ACTIONTYPE.updateToken, payload: token })
         },
-        resetHttpError: http => {
-            dispatch({ type: ACTIONTYPE.resetError, payload: http })
+        resetHttp: http => {
+            dispatch({ type: ACTIONTYPE.resetHttp, payload: http })
         },
         updateMenu: menu => {
             dispatch({ type: ACTIONTYPE.updateMenu, payload: menu })

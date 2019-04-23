@@ -9,6 +9,14 @@ import store from '../store/store'
 
 import ACTIONTYPE from '../store/action.types'
 
+/**
+ * 全局提示配置
+ */
+message.config({
+  duration: 2,
+  maxCount: 2,
+})
+
 
 // http request 拦截器
 axios.interceptors.request.use(config => {
@@ -26,13 +34,19 @@ axios.interceptors.request.use(config => {
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
-    store.dispatch({ type: ACTIONTYPE.http, payload: { status: response.status, msg: response.data.msg, success: false } })
-    //将返回结果统一 扔进 redux 触发提示信息
+    /**
+     * 统一触发消息提示
+     */
+    if (response.data.success) {
+      message.success(response.data.msg)
+    } else {
+      message.warn(response.data.msg)
+    }
+
     return response
   },
   error => {
     if (error.response) {
-      console.log(error.response, window.location)
       switch (error.response.status) {
         case 401:
           message.error(`${error.response.statusText} 无权限`)
@@ -44,8 +58,8 @@ axios.interceptors.response.use(
           message.error(`${error.response.statusText} 未知错误`)
           break
       }
-      //将错误信息 扔进redux 触发消息提示
-      store.dispatch({ type: ACTIONTYPE.http, payload: { status: error.response.status, msg: error.response.statusText, success: false } })
+      //将错误信息 扔进redux 触发路由重定向
+      store.dispatch({ type: ACTIONTYPE.http, payload: { status: error.response.status, msg: error.response.statusText } })
     }
     return Promise.reject(error.response.data) // 返回接口返回的错误信息
   })

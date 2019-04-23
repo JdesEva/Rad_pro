@@ -27,7 +27,7 @@ class Home extends React.Component {
         return (
             <div className="home">
                 {
-                    Object.keys(this.props.httpError).length > 0 ? <Redirect to="/login"></Redirect> : '' //axios 拦截错误之后，打回登录页
+                    Object.keys(this.props.http).length > 0 && this.props.http.status !== 200 ? <Redirect to="/login"></Redirect> : '' //axios 拦截错误之后，打回登录页
                 }
                 <Layout>
                     <Header {...this.props}></Header>

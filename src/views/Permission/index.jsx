@@ -1,6 +1,8 @@
 import React from 'react'
 import './index.scss'
 
+import Node from '@/components/Tree_button/node'
+
 import { Row, Col, Card, Form, Tree, Empty, Button, Input, Icon } from 'antd'
 
 const { TreeNode } = Tree
@@ -12,6 +14,7 @@ class Permission extends React.Component {
         super(props)
         this.state = {
             tree: [],
+            List: [],
             node: {},
             labelLayout: { //表单布局
                 labelCol: {
@@ -65,15 +68,15 @@ class Permission extends React.Component {
      * 选择菜单节点
      */
     onSelect = (key, ev) => {
-        console.log(key, ev, ev.node.getNodeState())
+        console.log(key, ev, ev.node.getNodeChildren())
         this.setState({
-            node: ev.node
+            node: ev.node.props.node
         })
         this.props.form.setFieldsValue({
-            path: ev.node.props.eventKey,
-            name: ev.node.props.title,
-            per_path: '暂无',
-            root_path: '暂无'
+            path: ev.node.props.node.path,
+            name: ev.node.props.node.name,
+            per_path: ev.node.props.node.per_path || null,
+            group: ev.node.props.node.group || null
         })
     }
 
@@ -84,8 +87,10 @@ class Permission extends React.Component {
         ev.preventDefault()
         this.props.form.validateFields((errors, values) => {
             if (!errors) {
-                console.log(values)
-                this.onSubmit({ ...values, id: this.state.node.props.id })
+                console.log(values, this.state.node.id.length)
+                var data = { ...values, id: this.state.node.id, per_id: this.state.node.per_id }
+                if (!this.state.node.per_id) data = { ...data, group: values.path }
+                this.onSubmit(data)
             }
         })
     }
@@ -106,13 +111,53 @@ class Permission extends React.Component {
         }).catch(() => { })
     }
 
+    /**
+     * 创建一个子节点
+     */
+    onAdd = node => {
+        console.log(node)
+        this.onSubmit({
+            name: '新建节点',
+            per_id: node.id,
+            path: '',
+            group: node.group,
+            per_path: node.path
+        })
+    }
+
+    /**
+     * 删除一个节点
+     */
+    onRemove = node => {
+        console.log(node)
+        let params = { id: node.id }
+        this.props.api.get(this.props.server.permission.delete, { params: params }).then(res => {
+            if (res.data.success) {
+                this._initTreeList()
+            }
+        }).catch(() => { })
+    }
+
+    /**
+     * 创建一个一级菜单
+     */
+    onAddFirst = () => {
+        this.props.api.get(this.props.server.permission.createFst).then(res => {
+            if (res.data.success) {
+                this._initTreeList()
+            }
+        }).catch(() => { })
+    }
+
+
+
 
     render() {
         const Loop = data => data.map(row => {
             if (row.children && row.children.length > 0) {
-                return <TreeNode id={row.id} key={row.path} title={row.name}>{Loop(row.children)}</TreeNode>
+                return <TreeNode node={row} key={row.id} title={Node(row, this)}>{Loop(row.children)}</TreeNode>
             }
-            return <TreeNode id={row.id} key={row.path} title={row.name}></TreeNode>
+            return <TreeNode node={row} key={row.id} title={Node(row, this)}></TreeNode>
         })
 
         const { getFieldDecorator } = this.props.form
@@ -125,8 +170,11 @@ class Permission extends React.Component {
                             <Card>
                                 <h3>菜单列表</h3>
                                 {
+                                    this.state.tree.length > 0 ? <Button onClick={this.onAddFirst} className="fir-nav-button">添加一级菜单</Button> : ''
+                                }
+                                {
                                     this.state.tree.length > 0 ?
-                                        <Tree blockNode onSelect={this.onSelect}>
+                                        <Tree defaultExpandAll showLine blockNode onSelect={this.onSelect}>
                                             {Loop(this.state.tree)}
                                         </Tree>
                                         : <Empty description="暂无数据">
@@ -166,7 +214,7 @@ class Permission extends React.Component {
                                     </Form.Item>
                                     <Form.Item label="顶级目录">
                                         {
-                                            getFieldDecorator('root_path')(
+                                            getFieldDecorator('group')(
                                                 <Input disabled prefix={<Icon type="fork" style={{ color: 'rgba(0,0,0,.25)' }} />} />
                                             )
                                         }
