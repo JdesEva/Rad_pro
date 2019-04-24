@@ -6,7 +6,8 @@ export default {
     user: {
         login: '/user/login',
         register: '/user/register',
-        logout: '/user/logout'
+        logout: '/user/logout',
+        query: '/user/selectByCondition'
     },
     permission: {
         query: '/permission/selectByCondition',

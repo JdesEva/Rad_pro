@@ -14,6 +14,7 @@ const ErrorPage = Loadable({ loader: () => import(/* webpackChunkName: "Home" */
 const User = Loadable({ loader: () => import(/* webpackChunkName: "User" */ '../views/User'), loading: Loading })
 const Register = Loadable({ loader: () => import(/* webpackChunkName: "Register" */ '../views/Register'), loading: Loading })
 const Permission = Loadable({ loader: () => import(/* webpackChunkName: "Permission" */ '../views/Permission'), loading: Loading })
+const Role = Loadable({ loader: () => import(/* webpackChunkName: "Role" */ '../views/Role/role'), loading: Loading })
 
 export default [{
     path: '/',
@@ -26,11 +27,21 @@ export default [{
         path: 'index',
         component: Index
     }, {
+        path: '*',
+        component: ErrorPage
+    }]
+}, {
+    path: '/setting',
+    component: Home,
+    children: [{
         path: 'user',
         component: User
     }, {
         path: 'permission',
         component: Permission
+    }, {
+        path: 'role',
+        component: Role
     }, {
         path: '*',
         component: ErrorPage

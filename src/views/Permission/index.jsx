@@ -100,7 +100,8 @@ class Permission extends React.Component {
      */
     onSubmit = params => {
         params = params || {}
-        this.props.api.post(this.props.server.permission.create, params).then(res => {
+        var url = Object.keys(params).length > 0 && params.id ? this.props.server.permission.update : this.props.server.permission.create
+        this.props.api.post(url, params).then(res => {
             console.log(res)
             if (res.data.success) {
                 this._initTreeList()

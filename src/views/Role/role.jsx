@@ -1,7 +1,8 @@
 import React from 'react'
-import './index.scss'
+import './role.scss'
 
-class Loading extends React.Component {
+
+class Role extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -9,14 +10,16 @@ class Loading extends React.Component {
         }
     }
 
+
+
     render() {
         return (
-            <div className="custom-loading">
-                Loading...
+            <div>
+
             </div>
         )
     }
 }
 
 
-export default Loading
+export default Role

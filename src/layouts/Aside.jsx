@@ -10,12 +10,17 @@ class Aside extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            data: []
         }
+    }
+
+    componentWillMount() {
+
     }
 
     componentDidMount() {
         console.log(this)
+        this.__initNavmenu()
     }
 
 
@@ -35,38 +40,67 @@ class Aside extends React.Component {
         this.props.updateMenu({ isCollapse: isCollapse })
     }
 
+    /**
+     * 查询菜单
+     */
+    __initNavmenu = () => {
+        this.props.api.get(this.props.server.permission.query).then(res => {
+            console.log(res)
+            if (res.data.success) {
+                this.setState({
+                    data: res.data.data
+                })
+            }
+        })
+    }
+
+    /**
+     * 选中菜单
+     */
+    onSelect = node => {
+        console.log(node)
+        this.props.updateMenu({ ...this.props.menu, isActive: node.keyPath })
+    }
+
+    /**
+     * 展开菜单
+     */
+    onOpenChange = key => {
+        console.log(key)
+        this.props.updateMenu({ ...this.props.menu, isOpen: key })
+    }
+
     render() {
+        const mapPermission = data => data.map(row => {
+            if (row.children) {
+                return (
+                    <SubMenu
+                        key={row.id}
+                        title={<span><Icon type={row.icon} /><span>{row.name}</span></span>}
+                    >
+                        {mapPermission(row.children)}
+                    </SubMenu>
+                )
+            }
+            return (
+                <Menu.Item key={row.id}>
+                    <Icon type={row.icon} />
+                    <span>{row.name}</span>
+                    <Link to={`${row.group}${row.path}`}></Link>
+                </Menu.Item>
+            )
+        })
         return (
             <Layout.Sider breakpoint="md" className="custom-aside" collapsedWidth={this.props.menu.broken ? '0' : '80'}
                 collapsed={this.props.menu.isCollapse}
                 onBreakpoint={broken => { this.onBroken(broken) }}
                 onCollapse={isCollapse => { this.toggleIsCollapse(isCollapse) }}>
-                <Menu defaultSelectedKeys={['1']} mode="inline" style={{ borderRight: !this.props.menu.isCollapse ? 'none' : '1px solid #e8e8e8' }}>
-                    <Menu.Item key="1">
-                        <Icon type="home" />
-                        <span>系统主页</span>
-                        <Link to={`${this.props.match.path}/index`}></Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                        <Icon type="user" />
-                        <span>用户管理</span>
-                        <Link to={`${this.props.match.path}/user`}></Link>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                        <Icon type="ordered-list" />
-                        <span>菜单管理</span>
-                        <Link to={`${this.props.match.path}/permission`}></Link>
-                    </Menu.Item>
-                    <SubMenu
-                        key="sub1"
-                        title={<span><Icon type="user" /><span>User</span></span>}
-                    >
-                        <Menu.Item key="33">Tom</Menu.Item>
-                        <Menu.Item key="4">Bill</Menu.Item>
-                        <Menu.Item key="5">Alex</Menu.Item>
-                    </SubMenu>
+                <Menu defaultOpenKeys={this.props.menu.isOpen} onSelect={this.onSelect} selectedKeys={this.props.menu.isActive} mode="inline" style={{ borderRight: !this.props.menu.isCollapse ? 'none' : '1px solid #e8e8e8' }}>
+                    {
+                        mapPermission(this.state.data)
+                    }
                 </Menu>
-            </Layout.Sider >
+            </Layout.Sider>
         )
     }
 }
