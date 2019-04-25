@@ -10,6 +10,9 @@ export default function mapDispatchToProps(dispatch, ownProps) {
         },
         updateMenu: menu => {
             dispatch({ type: ACTIONTYPE.updateMenu, payload: menu })
+        },
+        onCloseDrawer: drawer => {
+            dispatch({ type: ACTIONTYPE.drawer, payload: drawer })
         }
     }
 }

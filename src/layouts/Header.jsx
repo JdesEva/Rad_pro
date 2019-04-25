@@ -30,6 +30,9 @@ class Header extends React.Component {
                 {
                     !this.props.menu.broken ? <Icon onClick={this.toggleIsCollapse} className="trigger-icon" type={this.props.menu.isCollapse ? 'menu-unfold' : 'menu-fold'}></Icon> : ''
                 }
+                <div className="header-control">
+                    <Icon type="setting" onClick={() => { this.props.onCloseDrawer({ visible: true }) }}></Icon>
+                </div>
             </Layout.Header>
         )
     }

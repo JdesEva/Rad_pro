@@ -76,7 +76,7 @@ class Aside extends React.Component {
                 return (
                     <SubMenu
                         key={row.id}
-                        title={<span><Icon type={row.icon} /><span>{row.name}</span></span>}
+                        title={<span>{row.icon ? <Icon type={row.icon} /> : ''}<span>{row.name}</span></span>}
                     >
                         {mapPermission(row.children)}
                     </SubMenu>
@@ -84,7 +84,7 @@ class Aside extends React.Component {
             }
             return (
                 <Menu.Item key={row.id}>
-                    <Icon type={row.icon} />
+                    {row.icon ? <Icon type={row.icon} /> : ''}
                     <span>{row.name}</span>
                     <Link to={`${row.group}${row.path}`}></Link>
                 </Menu.Item>

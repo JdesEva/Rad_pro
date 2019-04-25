@@ -48,10 +48,6 @@ class Permission extends React.Component {
         console.log(this)
     }
 
-    componentWillReceiveProps() {
-        console.log(this.props)
-    }
-
     /**
      * 查询树形表数据源
      */
@@ -68,7 +64,6 @@ class Permission extends React.Component {
      * 选择菜单节点
      */
     onSelect = (key, ev) => {
-        console.log(key, ev, ev.node.getNodeChildren())
         this.setState({
             node: ev.node.props.node
         })

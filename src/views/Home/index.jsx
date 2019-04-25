@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.scss'
 
-import { Layout, Spin } from 'antd'
+import { Layout, Spin, Drawer } from 'antd'
 import { Redirect } from 'react-router-dom'
 
 import Header from '@/layouts/Header'
@@ -13,7 +13,7 @@ class Home extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            visible: true
         }
     }
 
@@ -26,6 +26,17 @@ class Home extends React.Component {
     render() {
         return (
             <div className="home">
+                <Drawer
+                    title="全局设置"
+                    placement="right"
+                    width={300}
+                    onClose={() => { this.props.onCloseDrawer({ visible: false }) }}
+                    visible={this.props.drawer.visible}
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Drawer>
                 {
                     Object.keys(this.props.http).length > 0 && this.props.http.status !== 200 ? <Redirect to="/login"></Redirect> : '' //axios 拦截错误之后，打回登录页
                 }
