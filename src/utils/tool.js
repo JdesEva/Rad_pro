@@ -44,3 +44,26 @@ export function __ToTree(data, perKey) {
     })
     return result
 }
+
+
+/**
+ * 添加 0 
+ */
+
+export function __num(num) {
+    return num < 10 ? '0' + num : num
+}
+
+/**
+ * 时间格式转化
+ */
+
+export function __Time(date) {
+    let Y = date.getFullYear() // 年
+    let m = __num(date.getMonth() + 1) // 月
+    let d = __num(date.getDate()) // 日
+    let h = __num(date.getHours()) // 时
+    let i = __num(date.getMinutes()) // 分
+    let s = __num(date.getSeconds()) // 秒
+    return Y + '-' + m + '-' + d + ' ' + h + ':' + i + ':' + s
+}
