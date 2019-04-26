@@ -1,5 +1,8 @@
 .home {
   height: 100vh;
+  .ant-layout {
+    height: 100%;
+  }
   .ant-layout-sider {
     background: #fff;
     border-right: 1px solid #e8e8e8;
@@ -10,11 +13,5 @@
     background: rgba(255, 255, 255, 0.2);
     margin: 16px 28px 16px 0;
     float: left;
-  }
-  .spin-container > div {
-    min-height: 100vh;
-    height: auto;
-    display: flex;
-    flex-direction: column;
   }
 }

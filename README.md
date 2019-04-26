@@ -29,9 +29,9 @@ Jdes on 2019.04.17
    |       | 
    |       +-- layouts         //layout布局
    |       |
-   |       +-- route           //router配置文件
+   |       +-- route           //router
    |       |
-   |       +-- store           //redux配置文件
+   |       +-- store           //redux
    |       |
    |       +-- utils           //工具类
    |       |

@@ -10,10 +10,10 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this)
-        this.props.api.post('/process_post').then(res => {
-            console.log(res)
-        })
+        // console.log(this)
+        // this.props.api.post('/process_post').then(res => {
+        //     console.log(res)
+        // })
     }
 
     render() {

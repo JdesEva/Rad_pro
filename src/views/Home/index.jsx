@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.scss'
 
-import { Layout, Spin, Drawer } from 'antd'
+import { Layout, Drawer } from 'antd'
 import { Redirect } from 'react-router-dom'
 
 import Header from '@/layouts/Header'
@@ -40,17 +40,15 @@ class Home extends React.Component {
                 {
                     Object.keys(this.props.http).length > 0 && this.props.http.status !== 200 ? <Redirect to="/login"></Redirect> : '' //axios 拦截错误之后，打回登录页
                 }
-                <Spin wrapperClassName="spin-container" spinning={this.props.http.loading} delay={800} style={{ maxHeight: 'none', minHeight: '100vh', height: 'auto' }}>
+                <Layout>
+                    <Header {...this.props}></Header>
                     <Layout>
-                        <Header {...this.props}></Header>
+                        <Aside {...this.props}></Aside>
                         <Layout>
-                            <Aside {...this.props}></Aside>
-                            <Layout>
-                                <Content {...this.props}></Content>
-                            </Layout>
+                            <Content {...this.props}></Content>
                         </Layout>
                     </Layout>
-                </Spin>
+                </Layout>
             </div>
         )
     }

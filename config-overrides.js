@@ -36,15 +36,6 @@ const addCustom = () => config => {
             minRatio: 0.8
         })
     ]
-
-
-    if (process.env.NODE_ENV === 'production') {
-
-        process.env.GENERATE_SOURCEMAP = 'false' // css Map
-
-        config.devtool = false //js Map
-    }
-
     if (process.env.NODE_ENV !== 'development') config.plugins = [...config.plugins, ...plugins]
     return config
 }

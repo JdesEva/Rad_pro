@@ -38,7 +38,7 @@ class RouterIntercept extends React.Component {
         if (!token && this.props.path !== '/register') replace('/login')
 
         //跳转至首页
-        if (location.pathname === '/' || location.pathname === '/disabord') replace('/disabord/index')
+        if (location.pathname === '/' || location.pathname === '/dashboard') replace('/dashboard/index')
 
         //回到登录页清空信息
         if (this.props.path === '/login') this.props.resetHttp({})

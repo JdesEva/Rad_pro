@@ -18,12 +18,14 @@ message.config({
 })
 
 
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '/api' : ''
+
+
 // http request 拦截器
 axios.interceptors.request.use(config => {
   if (store.getState().token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
     config.headers.Authorization = store.getState().token
   }
-  store.dispatch({ type: ACTIONTYPE.http, payload: { loading: true } })
   return config
 },
   err => {
@@ -43,7 +45,6 @@ axios.interceptors.response.use(
     } else {
       message.warn(response.data.msg)
     }
-    store.dispatch({ type: ACTIONTYPE.http, payload: { status: response.status, msg: response.data.msg, loading: false } })
     return response
   },
   error => {
@@ -60,7 +61,7 @@ axios.interceptors.response.use(
           break
       }
       //将错误信息 扔进redux 触发路由重定向
-      store.dispatch({ type: ACTIONTYPE.http, payload: { status: error.response.status, msg: error.response.statusText, loading: false } })
+      store.dispatch({ type: ACTIONTYPE.http, payload: { status: error.response.status, msg: error.response.statusText } })
     }
     return Promise.reject(error.response.data) // 返回接口返回的错误信息
   })

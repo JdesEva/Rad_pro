@@ -3,7 +3,7 @@ import './index.scss'
 
 import Node from '@/components/Tree_button/node'
 
-import { Row, Col, Card, Form, Tree, Empty, Button, Input, Icon } from 'antd'
+import { Row, Col, Card, Form, Tree, Empty, Button, Input, Icon, Spin } from 'antd'
 
 const { TreeNode } = Tree
 
@@ -15,6 +15,7 @@ class Permission extends React.Component {
         this.state = {
             tree: [],
             List: [],
+            Loading: false,
             node: {},
             labelLayout: { //表单布局
                 labelCol: {
@@ -52,10 +53,14 @@ class Permission extends React.Component {
      * 查询树形表数据源
      */
     _initTreeList = () => {
+        this.setState({
+            Loading: true
+        })
         this.props.api.get(this.props.server.permission.query).then(res => {
             console.log(res)
             this.setState({
-                tree: res.data.data
+                tree: res.data.data,
+                Loading: false
             })
         }).catch(() => { })
     }
@@ -71,7 +76,9 @@ class Permission extends React.Component {
             path: ev.node.props.node.path,
             name: ev.node.props.node.name,
             per_path: ev.node.props.node.per_path || null,
-            group: ev.node.props.node.group || null
+            group: ev.node.props.node.group || null,
+            icon: ev.node.props.node.icon || null,
+            per_order: ev.node.props.node.per_order || null
         })
     }
 
@@ -155,7 +162,6 @@ class Permission extends React.Component {
             }
             return <TreeNode node={row} key={row.id} title={Node(row, this)}></TreeNode>
         })
-
         const { getFieldDecorator } = this.props.form
 
         return (
@@ -164,19 +170,21 @@ class Permission extends React.Component {
                     <Col xs={24} sm={24} md={24} lg={12} xl={8} xxl={10}>
                         <div className="card-out-wrapper">
                             <Card>
-                                <h3>菜单列表</h3>
-                                {
-                                    this.state.tree.length > 0 ? <Button onClick={this.onAddFirst} className="fir-nav-button">添加一级菜单</Button> : ''
-                                }
-                                {
-                                    this.state.tree.length > 0 ?
-                                        <Tree defaultExpandAll showLine blockNode onSelect={this.onSelect}>
-                                            {Loop(this.state.tree)}
-                                        </Tree>
-                                        : <Empty description="暂无数据">
-                                            <Button type="primary" onClick={this.onSubmit.bind(this, {})}>创建</Button>
-                                        </Empty>
-                                }
+                                <Spin spinning={this.state.Loading} delay={500}>
+                                    <h3>菜单列表</h3>
+                                    {
+                                        this.state.tree.length > 0 ? <Button onClick={this.onAddFirst} className="fir-nav-button">添加一级菜单</Button> : ''
+                                    }
+                                    {
+                                        this.state.tree.length > 0 ?
+                                            <Tree defaultExpandAll showLine blockNode onSelect={this.onSelect}>
+                                                {Loop(this.state.tree)}
+                                            </Tree>
+                                            : <Empty description="暂无数据">
+                                                <Button type="primary" onClick={this.onSubmit.bind(this, {})}>创建</Button>
+                                            </Empty>
+                                    }
+                                </Spin>
                             </Card>
                         </div>
                     </Col>
@@ -187,7 +195,7 @@ class Permission extends React.Component {
                                 <Form style={{ display: Object.keys(this.state.node).length > 0 ? 'block' : 'none' }} {...this.state.labelLayout} onSubmit={this.onCreate}>
                                     <Form.Item label="菜单名称">
                                         {getFieldDecorator('name', {
-                                            rules: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }, { pattern: /^[a-zA-Z\u4e00-\u9fa5]+$/, message: '格式不正确' }]
+                                            rules: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }, { pattern: /^[a-zA-Z\u4e00-\u9fa50-9]+$/, message: '格式不正确' }]
                                         })(
                                             <Input prefix={<Icon type="bars" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="菜单名称" />
                                         )}
@@ -195,9 +203,27 @@ class Permission extends React.Component {
                                     <Form.Item label="菜单路径">
                                         {
                                             getFieldDecorator('path', {
-                                                rules: [{ required: true, message: "请输入路径", trigger: 'blur' }, { pattern: /^\/[a-zA-Z/]+$/, message: '格式不正确' }]
+                                                rules: [{ required: true, message: "请输入路径", trigger: 'blur' }, { pattern: /^\/[a-zA-Z/-0-9]+$/, message: '格式不正确' }]
                                             })(
                                                 <Input prefix={<Icon type="branches" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="路径,以 / 开头" />
+                                            )
+                                        }
+                                    </Form.Item>
+                                    <Form.Item label="菜单图标">
+                                        {
+                                            getFieldDecorator('icon', {
+                                                rules: [{ message: "请输入图标", trigger: 'blur' }]
+                                            })(
+                                                <Input prefix={<Icon type="paper-clip" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="菜单图标" />
+                                            )
+                                        }
+                                    </Form.Item>
+                                    <Form.Item label="菜单顺序">
+                                        {
+                                            getFieldDecorator('per_order', {
+                                                rules: [{ required: true, message: "请输入菜单顺序" }, { type: 'number', message: '格式不正确', transform: val => { if (val) Number(val) } }]
+                                            })(
+                                                <Input prefix={<Icon type="exclamation-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="菜单顺序" />
                                             )
                                         }
                                     </Form.Item>
