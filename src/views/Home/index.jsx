@@ -1,8 +1,10 @@
 import React from 'react'
 import './index.scss'
 
-import { Layout, Drawer } from 'antd'
+import { Layout, Drawer, Spin } from 'antd'
 import { Redirect } from 'react-router-dom'
+
+import * as __ from '../../utils/tool'
 
 import Header from '@/layouts/Header'
 import Aside from '@/layouts/Aside'
@@ -13,43 +15,74 @@ class Home extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            visible: true
+            visible: true,
+            data: [],
+            Loading: false
         }
     }
 
-
     componentDidMount() {
         console.log('home', this)
+        __.__Once(this.__initNavmenu())
+    }
+
+
+    componentWillUnmount() {
+        this.setState = () => {
+            return
+        }
+    }
+
+    /**
+     * 查询菜单
+     */
+    __initNavmenu = () => {
+        if (!this.props.menu.data || (this.props.menu.data.length && this.props.menu.data.length === 0)) {
+            this.setState({
+                Loading: true
+            })
+            this.props.api.get(this.props.server.permission.query).then(res => {
+                console.log(res)
+                if (res.data.success) {
+                    this.props.updateMenu({ data: res.data.data })
+                    this.setState({
+                        Loading: false
+                    })
+                }
+            })
+        }
     }
 
 
     render() {
         return (
             <div className="home">
-                <Drawer
-                    title="全局设置"
-                    placement="right"
-                    width={300}
-                    onClose={() => { this.props.onCloseDrawer({ visible: false }) }}
-                    visible={this.props.drawer.visible}
-                >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                </Drawer>
-                {
-                    Object.keys(this.props.http).length > 0 && this.props.http.status !== 200 ? <Redirect to="/login"></Redirect> : '' //axios 拦截错误之后，打回登录页
-                }
-                <Layout>
-                    <Header {...this.props}></Header>
+                <Spin spinning={this.state.Loading} delay={500} size="large" tip="Loading...">
+                    <Drawer
+                        title="全局设置"
+                        placement="right"
+                        width={300}
+                        onClose={() => { this.props.onCloseDrawer({ visible: false }) }}
+                        visible={this.props.drawer.visible}
+                    >
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                    </Drawer>
+                    {
+                        Object.keys(this.props.http).length > 0 && this.props.http.status !== 200 ? <Redirect to="/login"></Redirect> : '' //axios 拦截错误之后，打回登录页
+                    }
                     <Layout>
-                        <Aside {...this.props}></Aside>
+                        <Header {...this.props}></Header>
                         <Layout>
-                            <Content {...this.props}></Content>
+                            <Aside {...this.props} data={this.props.menu.data}></Aside>
+                            <Layout>
+                                <Content {...this.props}></Content>
+                            </Layout>
                         </Layout>
                     </Layout>
-                </Layout>
-            </div>
+                </Spin>
+            </div >
         )
     }
 }

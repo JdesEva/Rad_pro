@@ -30,5 +30,5 @@ export default {
     token: mapSessionToState('token', null),
     http: mapSessionToState('http', {}, 'object'),
     menu: mapSessionToState('menu', { isCollapse: false, broken: false }, 'object'),
-    drawer: mapSessionToState('drawer', { visible: true }, 'object'),
+    drawer: mapSessionToState('drawer', { visible: false }, 'object'),
 }

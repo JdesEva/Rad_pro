@@ -67,3 +67,15 @@ export function __Time(date) {
     let s = __num(date.getSeconds()) // 秒
     return Y + '-' + m + '-' + d + ' ' + h + ':' + i + ':' + s
 }
+
+/**
+ * 单次执行函数
+ * @param {传入的函数} fn 
+ */
+
+export const __Once = fn => {
+    let done = false
+    return function () {
+        return done ? undefined : ((done = true), fn.apply(this, arguments))
+    }
+}

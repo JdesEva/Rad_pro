@@ -19,6 +19,12 @@ class User extends React.Component {
         this.__initTableList()
     }
 
+    componentWillUnmount() {
+        this.setState = () => {
+            return
+        }
+    }
+
     /**
      * 查询表格数据
      */
@@ -39,10 +45,11 @@ class User extends React.Component {
 
 
     render() {
+        const { Loading, data } = this.state
         return (
             <div>
                 <Card>
-                    <Table loading={{ spinning: this.state.Loading, delay: 500 }} rowKey="id" dataSource={this.state.data}>
+                    <Table loading={{ spinning: Loading, delay: 500 }} rowKey="id" dataSource={data}>
                         <Column dataIndex="username" key="username" title="用户名"></Column>
                         <Column dataIndex="login_ip" key="login_ip" title="登陆地IP"></Column>
                         <Column dataIndex="telphone" key="telphone" title="手机号码"></Column>

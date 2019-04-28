@@ -29,7 +29,7 @@ axios.interceptors.request.use(config => {
   return config
 },
   err => {
-    message.warning('参数错误')
+    message.warning(err)
     return Promise.reject(err)
   })
 

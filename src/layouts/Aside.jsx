@@ -4,23 +4,15 @@ import './Aside.scss'
 import { Layout, Menu, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 
+
 const { SubMenu } = Menu
 
 class Aside extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: []
+
         }
-    }
-
-    componentWillMount() {
-
-    }
-
-    componentDidMount() {
-        console.log(this)
-        this.__initNavmenu()
     }
 
 
@@ -38,20 +30,6 @@ class Aside extends React.Component {
     toggleIsCollapse = (isCollapse) => {
         console.log(isCollapse)
         this.props.updateMenu({ isCollapse: isCollapse })
-    }
-
-    /**
-     * 查询菜单
-     */
-    __initNavmenu = () => {
-        this.props.api.get(this.props.server.permission.query).then(res => {
-            console.log(res)
-            if (res.data.success) {
-                this.setState({
-                    data: res.data.data
-                })
-            }
-        })
     }
 
     /**
@@ -97,7 +75,7 @@ class Aside extends React.Component {
                 onCollapse={isCollapse => { this.toggleIsCollapse(isCollapse) }}>
                 <Menu defaultOpenKeys={this.props.menu.isOpen} onSelect={this.onSelect} selectedKeys={this.props.menu.isActive} mode="inline" style={{ borderRight: !this.props.menu.isCollapse ? 'none' : '1px solid #e8e8e8' }}>
                     {
-                        mapPermission(this.state.data)
+                        this.props.menu.data ? mapPermission(this.props.data) : ''
                     }
                 </Menu>
             </Layout.Sider>

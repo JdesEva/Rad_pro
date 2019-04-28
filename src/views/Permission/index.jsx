@@ -3,7 +3,7 @@ import './index.scss'
 
 import Node from '@/components/Tree_button/node'
 
-import { Row, Col, Card, Form, Tree, Empty, Button, Input, Icon, Spin } from 'antd'
+import { Row, Col, Card, Form, Tree, Empty, Button, Input, Icon, Skeleton } from 'antd'
 
 const { TreeNode } = Tree
 
@@ -101,6 +101,9 @@ class Permission extends React.Component {
      * 提交菜单数据
      */
     onSubmit = params => {
+        this.setState({
+            Loading: true
+        })
         params = params || {}
         var url = Object.keys(params).length > 0 && params.id ? this.props.server.permission.update : this.props.server.permission.create
         this.props.api.post(url, params).then(res => {
@@ -108,7 +111,8 @@ class Permission extends React.Component {
             if (res.data.success) {
                 this._initTreeList()
                 this.setState({
-                    node: {}
+                    node: {},
+                    Loading: false
                 })
             }
         }).catch(() => { })
@@ -164,27 +168,29 @@ class Permission extends React.Component {
         })
         const { getFieldDecorator } = this.props.form
 
+        const { Loading, tree, node, labelLayout } = this.state
+
         return (
             <div>
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={8} xxl={10}>
                         <div className="card-out-wrapper">
                             <Card>
-                                <Spin spinning={this.state.Loading} delay={500}>
+                                <Skeleton loading={Loading} active paragraph={{ rows: 12 }}>
                                     <h3>菜单列表</h3>
                                     {
-                                        this.state.tree.length > 0 ? <Button onClick={this.onAddFirst} className="fir-nav-button">添加一级菜单</Button> : ''
+                                        tree.length > 0 ? <Button loading={Loading} onClick={this.onAddFirst} className="fir-nav-button">添加一级菜单</Button> : ''
                                     }
                                     {
-                                        this.state.tree.length > 0 ?
+                                        tree.length > 0 ?
                                             <Tree defaultExpandAll showLine blockNode onSelect={this.onSelect}>
-                                                {Loop(this.state.tree)}
+                                                {Loop(tree)}
                                             </Tree>
                                             : <Empty description="暂无数据">
                                                 <Button type="primary" onClick={this.onSubmit.bind(this, {})}>创建</Button>
                                             </Empty>
                                     }
-                                </Spin>
+                                </Skeleton>
                             </Card>
                         </div>
                     </Col>
@@ -192,7 +198,7 @@ class Permission extends React.Component {
                         <div className="card-out-wrapper">
                             <Card>
                                 <h3>编辑菜单</h3>
-                                <Form style={{ display: Object.keys(this.state.node).length > 0 ? 'block' : 'none' }} {...this.state.labelLayout} onSubmit={this.onCreate}>
+                                <Form style={{ display: Object.keys(node).length > 0 ? 'block' : 'none' }} {...labelLayout} onSubmit={this.onCreate}>
                                     <Form.Item label="菜单名称">
                                         {getFieldDecorator('name', {
                                             rules: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }, { pattern: /^[a-zA-Z\u4e00-\u9fa50-9]+$/, message: '格式不正确' }]
@@ -245,7 +251,7 @@ class Permission extends React.Component {
                                         <Button type="primary" htmlType="submit" block>提交</Button>
                                     </Form.Item>
                                 </Form>
-                                <Empty style={{ display: Object.keys(this.state.node).length === 0 ? 'block' : 'none' }} description="暂无编辑菜单"></Empty>
+                                <Empty style={{ display: Object.keys(node).length === 0 ? 'block' : 'none' }} description="暂无编辑菜单"></Empty>
                             </Card>
                         </div>
                     </Col>

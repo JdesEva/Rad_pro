@@ -3,6 +3,17 @@
   .ant-layout {
     height: 100%;
   }
+  display: flex;
+  flex-direction: column;
+  .ant-spin-nested-loading > div > .ant-spin {
+    max-height: initial;
+  }
+  & > div.ant-spin-nested-loading {
+    flex: 1;
+    & > div.ant-spin-container {
+      height: 100%;
+    }
+  }
   .ant-layout-sider {
     background: #fff;
     border-right: 1px solid #e8e8e8;
