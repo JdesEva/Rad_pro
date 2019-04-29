@@ -17,7 +17,7 @@ function mapSessionToState(key, __initVal, type = 'string') {
         case 'object':
             return JSON.parse(v)
         case 'number':
-            return v * 1
+            return Number(v)
         case 'boolean':
             return v === 'true'
         default:
@@ -27,6 +27,7 @@ function mapSessionToState(key, __initVal, type = 'string') {
 
 
 export default {
+    login: mapSessionToState('login', 0, 'number'),
     token: mapSessionToState('token', null),
     http: mapSessionToState('http', {}, 'object'),
     menu: mapSessionToState('menu', { isCollapse: false, broken: false }, 'object'),

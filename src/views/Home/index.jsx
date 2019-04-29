@@ -17,7 +17,7 @@ class Home extends React.Component {
         this.state = {
             visible: true,
             data: [],
-            Loading: false
+            Loading: false,
         }
     }
 
@@ -34,10 +34,10 @@ class Home extends React.Component {
     }
 
     /**
-     * 查询菜单
+     * 查询菜单,先判断缓存或者是否在有效时间之内，如果在则不去请求，否则进行请求
      */
     __initNavmenu = () => {
-        if (!this.props.menu.data || (this.props.menu.data.length && this.props.menu.data.length === 0)) {
+        if (!this.props.menu.data || (this.props.menu.data.length && this.props.menu.data.length === 0) || new Date().getTime() - this.props.login > 12 * 60 * 1000) {
             this.setState({
                 Loading: true
             })
@@ -45,6 +45,7 @@ class Home extends React.Component {
                 console.log(res)
                 if (res.data.success) {
                     this.props.updateMenu({ data: res.data.data })
+                    this.props.updateLogin(new Date().getTime()) //更新登录时间
                     this.setState({
                         Loading: false
                     })

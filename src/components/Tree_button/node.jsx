@@ -2,6 +2,7 @@ import React from 'react'
 import './node.scss'
 
 import { Button, message } from 'antd'
+import PropTypes from 'prop-types'
 
 const onAdd = (props, ev, e) => {
     e.stopPropagation()
@@ -27,4 +28,13 @@ export default function Node(props, ev) {
             <Button shape="circle" icon="minus" size="small" onClick={e => Remove(props, ev, e)}></Button>
         </div>
     )
+}
+
+/**
+ * 类型检查
+ */
+
+Node.propTypes = {
+    props: PropTypes.object,
+    ev: PropTypes.object
 }

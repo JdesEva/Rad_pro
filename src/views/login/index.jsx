@@ -19,7 +19,7 @@ class Login extends React.Component {
         console.log(this, 'api', this.props.api.defaults)
     }
 
-    Login = (ev) => {
+    Login = ev => {
         ev.preventDefault()
         this.props.form.validateFields((errors, values) => {
             if (!errors) {
@@ -27,6 +27,7 @@ class Login extends React.Component {
                     console.log(res)
                     if (res.data.success) {
                         this.props.updateToken(res.data.data)
+                        this.props.updateLogin(new Date().getTime())
                         this.props.history.replace('/')
                     }
                 }).catch(() => { })

@@ -1,8 +1,7 @@
 import React from 'react'
-import './404.scss'
+import './index.scss'
 
-
-class ErrorPage extends React.Component {
+class Workplace extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -14,12 +13,12 @@ class ErrorPage extends React.Component {
 
     render() {
         return (
-            <div className="not-page">
-                404 页面飞去火星啦
+            <div>
+                工作台
             </div>
         )
     }
 }
 
 
-export default ErrorPage
+export default Workplace

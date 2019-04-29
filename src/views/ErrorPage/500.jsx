@@ -14,8 +14,8 @@ class ServerError extends React.Component {
 
     render() {
         return (
-            <div>
-
+            <div className="server-error">
+                5000
             </div>
         )
     }

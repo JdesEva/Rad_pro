@@ -3,6 +3,7 @@
  */
 
 export default {
+    login: 'Login', //登录
     updateToken: 'UPDATE_TOKEN',//更新token
     http: 'HTTP_STATUS',//请求响应
     resetHttp: 'RESET_HTTP_STATUS',//重置请求响应

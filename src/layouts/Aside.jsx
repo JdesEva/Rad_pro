@@ -11,7 +11,7 @@ class Aside extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            isOpen: []
         }
     }
 
@@ -37,15 +37,18 @@ class Aside extends React.Component {
      */
     onSelect = node => {
         console.log(node)
+        console.log('iv', this.state.isOpen)
         this.props.updateMenu({ ...this.props.menu, isActive: node.keyPath })
     }
 
     /**
-     * 展开菜单
+     * 展开菜单,保证每次只有一个菜单处于展开状态
      */
     onOpenChange = key => {
-        console.log(key)
-        this.props.updateMenu({ ...this.props.menu, isOpen: key })
+        this.setState({
+            isOpen: key.splice(-1)
+        })
+
     }
 
     render() {
@@ -73,7 +76,7 @@ class Aside extends React.Component {
                 collapsed={this.props.menu.isCollapse}
                 onBreakpoint={broken => { this.onBroken(broken) }}
                 onCollapse={isCollapse => { this.toggleIsCollapse(isCollapse) }}>
-                <Menu defaultOpenKeys={this.props.menu.isOpen} onSelect={this.onSelect} selectedKeys={this.props.menu.isActive} mode="inline" style={{ borderRight: !this.props.menu.isCollapse ? 'none' : '1px solid #e8e8e8' }}>
+                <Menu openKeys={this.state.isOpen} onOpenChange={this.onOpenChange} defaultOpenKeys={this.state.isOpen} onSelect={this.onSelect} selectedKeys={this.props.menu.isActive} mode="inline" style={{ borderRight: !this.props.menu.isCollapse ? 'none' : '1px solid #e8e8e8' }}>
                     {
                         this.props.menu.data ? mapPermission(this.props.data) : ''
                     }
