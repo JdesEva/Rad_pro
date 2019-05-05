@@ -31,6 +31,12 @@ class RouterIntercept extends React.Component {
         this.Auth()
     }
 
+    componentWillUnmount() {
+        this.setState = () => {
+            return
+        }
+    }
+
     Auth = () => {
         let { history: { replace }, location, token } = this.props
 

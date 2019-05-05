@@ -31,6 +31,7 @@ class Home extends React.Component {
         this.setState = () => {
             return
         }
+        clearTimeout()
     }
 
     /**

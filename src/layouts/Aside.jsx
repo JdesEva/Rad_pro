@@ -11,10 +11,9 @@ class Aside extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            isOpen: []
+
         }
     }
-
 
     /**
      * 开启收缩菜单
@@ -23,12 +22,11 @@ class Aside extends React.Component {
         this.props.updateMenu({ broken: broken })
     }
 
-
     /**
      * 折叠菜单
      */
-    toggleIsCollapse = (isCollapse) => {
-        console.log(isCollapse)
+    toggleIsCollapse = isCollapse => {
+        console.log(isCollapse, this.props.menu.isCollapse)
         this.props.updateMenu({ isCollapse: isCollapse })
     }
 
@@ -37,18 +35,14 @@ class Aside extends React.Component {
      */
     onSelect = node => {
         console.log(node)
-        console.log('iv', this.state.isOpen)
-        this.props.updateMenu({ ...this.props.menu, isActive: node.keyPath })
+        this.props.updateMenu({ isActive: node.keyPath })
     }
 
     /**
      * 展开菜单,保证每次只有一个菜单处于展开状态
      */
     onOpenChange = key => {
-        this.setState({
-            isOpen: key.splice(-1)
-        })
-
+        this.props.updateMenu({ isOpen: key.splice(-1) })
     }
 
     render() {
@@ -76,7 +70,7 @@ class Aside extends React.Component {
                 collapsed={this.props.menu.isCollapse}
                 onBreakpoint={broken => { this.onBroken(broken) }}
                 onCollapse={isCollapse => { this.toggleIsCollapse(isCollapse) }}>
-                <Menu openKeys={this.state.isOpen} onOpenChange={this.onOpenChange} defaultOpenKeys={this.state.isOpen} onSelect={this.onSelect} selectedKeys={this.props.menu.isActive} mode="inline" style={{ borderRight: !this.props.menu.isCollapse ? 'none' : '1px solid #e8e8e8' }}>
+                <Menu openKeys={this.props.menu.isOpen} onOpenChange={this.onOpenChange} defaultOpenKeys={this.props.menu.isOpen} onSelect={this.onSelect} selectedKeys={this.props.menu.isActive} mode="inline" style={{ borderRight: !this.props.menu.isCollapse ? 'none' : '1px solid #e8e8e8' }}>
                     {
                         this.props.menu.data ? mapPermission(this.props.data) : ''
                     }
