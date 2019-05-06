@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": false,
   "dependencies": {
+    "@babel/node": "^7.2.2",
     "antd": "^3.15.2",
     "axios": "^0.18.0",
+    "express": "^4.16.4",
     "js-md5": "^0.7.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -17,7 +19,9 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "node server/app.js",
+    "dev": "nodemon"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -29,16 +33,37 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.4.0",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
     "babel-plugin-import": "^1.11.0",
     "compression-webpack-plugin": "^2.0.0",
+    "cross-env": "^5.2.0",
     "customize-cra": "^0.2.12",
     "http-proxy-middleware": "^0.19.1",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
     "react-app-rewired": "^2.1.1",
     "react-loadable": "^5.5.0",
+    "redux-thunk": "^2.3.0",
     "uglifyjs-webpack-plugin": "^2.1.2"
+  },
+  "babel": {
+    "presets": [
+      "react-app",
+      [
+        "@babel/preset-env"
+      ]
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ]
+    ]
   },
   "proxy": "http://127.0.0.1:9876"
 }
